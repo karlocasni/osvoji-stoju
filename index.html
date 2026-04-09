@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baci foru za 100ju</title>
+    <meta name="description" content="Nasmij nas i uzmi lovu! Prijavi se na najluđi comedy event.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Glows -->
+    <div class="bg-glow glow-cyan"></div>
+    <div class="bg-glow glow-magenta"></div>
+
+    <!-- Hero Section -->
+    <section class="hero container">
+        <h1>Baci foru za 100ju</h1>
+        <p class="subheadline">Nasmij nas i uzmi lovu!</p>
+        <button class="btn pulse" onclick="openBookingModal()">Prijavi se odmah</button>
+    </section>
+
+    <!-- Upcoming Events Section -->
+    <section class="container" id="events">
+        <h2>Nadolazeći Događaji</h2>
+        <div class="events-grid" id="eventsContainer">
+            <!-- Events will be populated by JS -->
+            <div class="glass-card event-card">
+                <i class="fas fa-spinner fa-spin fa-3x" style="color:var(--cyan); margin: auto;"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Description Section -->
+    <section class="container" id="description">
+        <div class="glass-card description-content">
+            <h2>Što je ovo?</h2>
+            <p>Imaš dobru foru? Misliš da možeš nasmijati naše voditelje? Ako uspiješ, nagrada je 100€! Pravila su jednostavna: prijavi se, dođi na event, stani pred mikrofon i baci foru. Ako nasmiješ voditelje, lova je tvoja.</p>
+            <p>Broj mjesta je ograničen, stoga se prijavi što prije!</p>
+        </div>
+    </section>
+
+    <!-- Hosts Section -->
+    <section class="container" id="hosts">
+        <h2>Upoznaj Voditelje</h2>
+        <div class="hosts-grid">
+            <div class="glass-card host-card">
+                <div class="host-image-placeholder">
+                    <i class="fas fa-user-astronaut"></i>
+                </div>
+                <h3>Stjepan Ursa</h3>
+                <div class="host-socials">
+                    <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="glass-card host-card">
+                <div class="host-image-placeholder">
+                    <i class="fas fa-user-ninja"></i>
+                </div>
+                <h3>Pino Pingvino</h3>
+                <div class="host-socials">
+                    <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#pravila-privatnosti">Pravila privatnosti</a>
+                <a href="#uvjeti-dogadaja">Uvjeti događaja</a>
+            </div>
+            <p>&copy; 2026 Baci foru za 100ju. Sva prava pridržana.</p>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="glass-card modal-content" id="modalContent">
+            <button class="close-modal" onclick="closeBookingModal()">&times;</button>
+            
+            <!-- Step 0: Event Selection -->
+            <div class="modal-step" id="step0">
+                <h2>Odaberi Događaj</h2>
+                <div class="form-group">
+                    <label for="eventSelect">Lokacija i Datum</label>
+                    <select id="eventSelect" class="form-control">
+                        <option value="">Učitavanje događaja...</option>
+                    </select>
+                </div>
+                <div class="modal-nav" style="justify-content: flex-end;">
+                    <button class="btn" onclick="nextStep(0)">Dalje</button>
+                </div>
+            </div>
+
+            <!-- Step 1: Legal Check -->
+            <div class="modal-step" id="step1">
+                <h2>Pravila i Uvjeti</h2>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="ageCheck">
+                    <label for="ageCheck">Potvrđujem da sam stariji/a od 18 godina</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="termsCheck">
+                    <label for="termsCheck">Prihvaćam uvjete događaja</label>
+                </div>
+                <div class="modal-nav">
+                    <button class="btn btn-outline" onclick="prevStep(1)">Nazad</button>
+                    <button class="btn" onclick="nextStep(1)">Dalje</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Personal Info -->
+            <div class="modal-step" id="step2">
+                <h2>Osobni Podaci</h2>
+                <div class="form-group">
+                    <label for="firstName">Ime <span style="color:var(--magenta)">*</span></label>
+                    <input type="text" id="firstName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Prezime <span style="color:var(--magenta)">*</span></label>
+                    <input type="text" id="lastName" class="form-control" required>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label for="age">Godine <span style="color:var(--magenta)">*</span></label>
+                        <input type="number" id="age" class="form-control" min="18" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sex">Spol <span style="color:var(--magenta)">*</span></label>
+                        <select id="sex" class="form-control" required>
+                            <option value="">Odaberi</option>
+                            <option value="M">Muško</option>
+                            <option value="Ž">Žensko</option>
+                            <option value="Drugo">Drugo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresa <span style="color:var(--magenta)">*</span></label>
+                    <input type="text" id="address" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Broj mobitela <span style="color:var(--magenta)">*</span></label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email <span style="color:var(--magenta)">*</span></label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="modal-nav">
+                    <button class="btn btn-outline" onclick="prevStep(2)">Nazad</button>
+                    <button class="btn" onclick="nextStep(2)">Pregled</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Summary -->
+            <div class="modal-step" id="step3">
+                <h2>Pregled Prijave</h2>
+                <div class="summary-box">
+                    <div class="summary-item">
+                        <span class="summary-label">Događaj:</span>
+                        <span class="summary-value" id="sumEvent"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Ime i Prezime:</span>
+                        <span class="summary-value" id="sumName"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Kontakt:</span>
+                        <span class="summary-value" id="sumContact"></span>
+                    </div>
+                </div>
+                
+                <div id="submitError" style="color: var(--magenta); display: none; margin-bottom: 1rem; text-align: center;"></div>
+                
+                <div class="modal-nav" id="submitNav">
+                    <button class="btn btn-outline" onclick="prevStep(3)">Nazad</button>
+                    <button class="btn pulse" onclick="submitRegistration()">Potvrdi prijavu</button>
+                </div>
+                <div class="loader" id="submitLoader"></div>
+            </div>
+            
+            <!-- Success Step -->
+            <div class="modal-step" id="stepSuccess" style="text-align: center;">
+                <i class="fas fa-check-circle" style="font-size: 5rem; color: #00E87F; margin-bottom: 1rem;"></i>
+                <h2>Prijava Uspješna!</h2>
+                <p>Vidimo se na događaju. Sretno!</p>
+                <div class="modal-nav" style="justify-content: center;">
+                    <button class="btn" onclick="closeBookingModal()">Zatvori</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

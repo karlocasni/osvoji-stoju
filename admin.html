@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Baci foru za 100ju</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 0.1rem solid var(--glass-border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--spacing-lg);
+        }
+        th, td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 0.1rem solid var(--glass-border);
+        }
+        th {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow glow-magenta"></div>
+
+    <div class="container" style="padding-top: var(--spacing-lg);">
+        <div class="glass-card">
+            <div class="admin-nav">
+                <h2>Admin Dashboard</h2>
+                <a href="index.html" class="btn btn-outline">Nazad na stranicu</a>
+            </div>
+
+            <!-- Login Section -->
+            <div id="loginSection" style="max-width: 30rem; margin: 0 auto;">
+                <h3>Prijava</h3>
+                <div class="form-group">
+                    <label>Lozinka</label>
+                    <input type="password" id="adminPassword" class="form-control">
+                </div>
+                <button class="btn" style="width:100%" onclick="login()">Prijava</button>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboardContent" style="display: none;">
+                <!-- Event Management Form -->
+                <h3>Dodaj Novi Događaj</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; margin-bottom: var(--spacing-md);">
+                    <div class="form-group">
+                        <label>Naziv (grad)</label>
+                        <input type="text" id="newEventName" class="form-control" placeholder="npr. Zagreb">
+                    </div>
+                    <div class="form-group">
+                        <label>Lokacija</label>
+                        <input type="text" id="newEventLocation" class="form-control" placeholder="Ime kluba/bara">
+                    </div>
+                    <div class="form-group">
+                        <label>Datum</label>
+                        <input type="date" id="newEventDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Vrijeme</label>
+                        <input type="time" id="newEventTime" class="form-control">
+                    </div>
+                </div>
+                <button class="btn" onclick="addEvent()">Dodaj Događaj</button>
+                <div id="eventMessage" style="margin-top: 1rem;"></div>
+
+                <hr style="border:0; border-top: 0.1rem solid var(--glass-border); margin: var(--spacing-lg) 0;">
+
+                <!-- Reservations List -->
+                <h3>Popis Prijavljenin i Registracija</h3>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ime i Prezime</th>
+                                <th>Email</th>
+                                <th>Mobitel</th>
+                                <th>Događaj</th>
+                                <th>Vrijeme prijave</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservationsTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
