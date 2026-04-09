@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if(typeof gsap !== 'undefined') {
         gsap.from(".hero h1", { duration: 1, y: 50, opacity: 0, ease: "power3.out" });
         gsap.from(".hero p", { duration: 1, y: 30, opacity: 0, ease: "power3.out", delay: 0.3 });
-        gsap.from(".hero .btn", { duration: 1, scale: 0.8, opacity: 0, ease: "back.out(1.7)", delay: 0.6 });
         
         gsap.utils.toArray('.glass-card').forEach((card, i) => {
             gsap.from(card, {
@@ -71,7 +70,7 @@ async function loadEvents() {
                 <div class="event-details">
                     <span><i class="fas fa-building"></i> ${ev.location}</span>
                     <span><i class="far fa-calendar-alt"></i> ${formatDate(ev.date)}</span>
-                    <span><i class="far fa-clock"></i> ${ev.time}</span>
+                    <span><i class="far fa-clock"></i> ${formatTime(ev.time)}</span>
                 </div>
             </div>
             <button class="btn" style="width:100%" onclick="openBookingModal(${ev.id})">Prijavi se za ovu lokaciju</button>
@@ -91,9 +90,20 @@ async function loadEvents() {
 
 function formatDate(dateStr) {
     if(!dateStr) return '';
+    if (dateStr.includes('T')) {
+        dateStr = dateStr.split('T')[0];
+    }
     const parts = dateStr.split('-');
     if(parts.length < 3) return dateStr;
     return `${parts[2]}.${parts[1]}.${parts[0]}.`;
+}
+
+function formatTime(timeStr) {
+    if (!timeStr) return '';
+    if (timeStr.includes('T')) {
+        return timeStr.split('T')[1].substring(0, 5);
+    }
+    return timeStr.substring(0, 5);
 }
 
 // --- Multistep Modal Logic ---
