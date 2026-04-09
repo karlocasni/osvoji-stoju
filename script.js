@@ -215,6 +215,7 @@ async function submitRegistration() {
         address: document.getElementById('address').value,
         phone: document.getElementById('phone').value,
         email: document.getElementById('email').value,
+        guest_idea: document.getElementById('guestIdea').value,
     };
     
     try {

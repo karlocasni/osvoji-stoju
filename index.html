@@ -42,7 +42,7 @@
     <section class="container" id="description">
         <div class="glass-card description-content">
             <h2>Što je ovo?</h2>
-            <p>Imaš dobru foru? Misliš da možeš nasmijati naše voditelje? Ako uspiješ, nagrada je 100€! Pravila su jednostavna: prijavi se, dođi na event, stani pred mikrofon i baci foru. Ako nasmiješ voditelje, lova je tvoja.</p>
+            <p>Imaš dobru foru? Misliš da možeš nasmijati naše voditelje? Ako uspiješ, nagrada je 100€! Pravila su jednostavna: prijavi se, dođi na event, stani pred mikrofon i baci foru. Fora može biti što god - vic, pjevanje, kostim, igranje uloga, pričanje gluposti... Ako nasmiješ voditelje, lova je tvoja.</p>
             <p>Broj mjesta je ograničen, stoga se prijavi što prije!</p>
         </div>
     </section>
@@ -69,6 +69,16 @@
                 <div class="host-socials">
                     <a href="https://www.instagram.com/pinopingvino/" target="_blank" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.tiktok.com/@pinopingvino" target="_blank" class="social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="glass-card host-card">
+                <div class="host-image-placeholder" style="background: var(--glass-bg); display: flex; justify-content: center; align-items: center; position: relative;">
+                    <i class="fas fa-user" style="font-size: 8rem; opacity: 0.3; margin-top: 2rem;"></i>
+                    <i class="fas fa-question" style="position: absolute; font-size: 5rem; top: 40%; color: var(--magenta);"></i>
+                </div>
+                <h3>Gost iznenađenja</h3>
+                <div class="host-socials" style="opacity: 0; pointer-events: none;">
+                    <a href="#" class="social-link"><i class="fas fa-question"></i></a>
                 </div>
             </div>
         </div>
@@ -161,6 +171,10 @@
                 <div class="form-group">
                     <label for="email">Email <span style="color:var(--magenta)">*</span></label>
                     <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="guestIdea">Koga biste voljeli vidjeti kao gosta iznenađenja?</label>
+                    <input type="text" id="guestIdea" class="form-control" placeholder="Tvoj prijedlog">
                 </div>
                 <div class="modal-nav">
                     <button class="btn btn-outline" onclick="prevStep(2)">Nazad</button>
