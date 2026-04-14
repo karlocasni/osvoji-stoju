@@ -106,12 +106,31 @@
             <!-- Step 0: Event Selection -->
             <div class="modal-step" id="step0">
                 <h2>Odaberi Događaj</h2>
-                <div class="form-group">
-                    <label for="eventSelect">Lokacija i Datum</label>
-                    <select id="eventSelect" class="form-control">
-                        <option value="">Učitavanje događaja...</option>
+                
+                <div class="form-group custom-select-wrapper">
+                    <label>Lokacija i Datum</label>
+                    <div class="custom-select" id="customEventSelect">
+                        <div class="custom-select-trigger" onclick="toggleCustomSelect()">
+                            <span id="customSelectLabel">Odaberi događaj...</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="custom-select-options" id="customEventOptions">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    <!-- Hidden real select -->
+                    <select id="eventSelect" class="form-control" style="display:none;" onchange="handleEventSelectChange()">
+                        <option value="">Odaberi događaj...</option>
                     </select>
                 </div>
+
+                <div id="eventNoticeContainer" class="glass-card" style="display: none; margin-bottom: 2rem; padding: 1rem; background: rgba(0, 194, 232, 0.1); border: 1px solid var(--cyan); border-radius: 0.8rem; text-align: left;">
+                    <p style="margin: 0; font-size: 0.95rem; color: var(--text-main);">
+                        <i class="fas fa-info-circle" style="color: var(--cyan); margin-right: 0.5rem;"></i>
+                        <span id="eventNoticeText"></span>
+                    </p>
+                </div>
+
                 <div class="modal-nav" style="justify-content: flex-end;">
                     <button class="btn" onclick="nextStep(0)">Dalje</button>
                 </div>

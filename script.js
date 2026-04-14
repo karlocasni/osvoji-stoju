@@ -51,14 +51,20 @@ async function loadEvents() {
     // Render on Page
     const container = document.getElementById('eventsContainer');
     const select = document.getElementById('eventSelect');
+    const customOptionsContainer = document.getElementById('customEventOptions');
     
     container.innerHTML = '';
     select.innerHTML = '<option value="">Odaberi događaj...</option>';
+    if (customOptionsContainer) customOptionsContainer.innerHTML = '';
     
     if(events.length === 0) {
         container.innerHTML = '<p>Trenutno nema nadolazećih događaja.</p>';
+        document.getElementById('customSelectLabel').textContent = 'Nema događaja';
         return;
     }
+    
+    let defaultNotice = "Svim posjetiteljima preporučamo dolazak 15-ak minuta ranije radi smještaja. Ukoliko se prijavljujete za nastup kao komičar, javite se našem osoblju čim stignete!";
+    document.getElementById('customSelectLabel').textContent = 'Odaberi događaj...';
     
     events.forEach(ev => {
         // Render card
@@ -83,8 +89,25 @@ async function loadEvents() {
         option.dataset.name = ev.name;
         option.dataset.location = ev.location;
         option.dataset.date = formatDate(ev.date);
-        option.textContent = `${ev.name} - ${ev.location} (${formatDate(ev.date)})`;
+        
+        let noticeData = ev.notice || defaultNotice;
+        option.dataset.notice = noticeData;
+        
+        const labelStr = `${ev.name} - ${ev.location} (${formatDate(ev.date)})`;
+        option.textContent = labelStr;
         select.appendChild(option);
+        
+        // Populate custom option
+        if (customOptionsContainer) {
+            const cOption = document.createElement('div');
+            cOption.className = 'custom-option';
+            cOption.onclick = (e) => {
+                e.stopPropagation();
+                selectCustomOption(ev.id, labelStr, noticeData);
+            };
+            cOption.innerHTML = `<strong>${ev.name}</strong> <br> <small style="color:var(--text-muted)">${ev.location} | ${formatDate(ev.date)} u ${formatTime(ev.time)}</small>`;
+            customOptionsContainer.appendChild(cOption);
+        }
     });
 }
 
@@ -106,6 +129,51 @@ function formatTime(timeStr) {
     return timeStr.substring(0, 5);
 }
 
+// --- Custom Select Logic ---
+function toggleCustomSelect() {
+    document.getElementById('customEventSelect').classList.toggle('active');
+}
+
+document.addEventListener('click', function(e) {
+    const customSelect = document.getElementById('customEventSelect');
+    if (customSelect && !customSelect.contains(e.target)) {
+        customSelect.classList.remove('active');
+    }
+});
+
+function selectCustomOption(value, label, notice) {
+    const select = document.getElementById('eventSelect');
+    const labelSpan = document.getElementById('customSelectLabel');
+    const customSelect = document.getElementById('customEventSelect');
+    
+    select.value = value;
+    if (labelSpan) labelSpan.textContent = label;
+    if (customSelect) customSelect.classList.remove('active');
+    
+    handleEventSelectChange();
+}
+
+function handleEventSelectChange() {
+    const select = document.getElementById('eventSelect');
+    const noticeContainer = document.getElementById('eventNoticeContainer');
+    const noticeText = document.getElementById('eventNoticeText');
+    
+    if (!select || !select.value) {
+        if (noticeContainer) noticeContainer.style.display = 'none';
+        return;
+    }
+    
+    const option = select.options[select.selectedIndex];
+    const notice = option.dataset.notice;
+    
+    if (notice) {
+        noticeText.innerHTML = notice;
+        noticeContainer.style.display = 'block';
+    } else {
+        noticeContainer.style.display = 'none';
+    }
+}
+
 // --- Multistep Modal Logic ---
 let currentStep = 0;
 let preSelectedEventId = null;
@@ -119,6 +187,12 @@ function openBookingModal(eventId = null) {
     
     if (eventId) {
         document.getElementById('eventSelect').value = eventId;
+        const options = Array.from(document.getElementById('eventSelect').options);
+        const opt = options.find(o => o.value == eventId);
+        if(opt) {
+            document.getElementById('customSelectLabel').textContent = opt.textContent;
+            handleEventSelectChange();
+        }
         showStep(1); // Skip step 0 if specific event clicked
     } else {
         showStep(0);
@@ -259,6 +333,13 @@ function resetForm() {
         else el.value = '';
         el.style.borderColor = 'var(--glass-border)';
     });
+    
+    const customSelectLabel = document.getElementById('customSelectLabel');
+    if (customSelectLabel) customSelectLabel.textContent = 'Odaberi događaj...';
+    
+    const noticeContainer = document.getElementById('eventNoticeContainer');
+    if (noticeContainer) noticeContainer.style.display = 'none';
+
     document.getElementById('ageCheck').checked = false;
     document.getElementById('termsCheck').checked = false;
     
